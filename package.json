@@ -1,0 +1,32 @@
+{
+  "name": "flow-writer",
+  "version": "1.0.0",
+  "description": "WordPress Flow Writer Plugin",
+  "main": "flow-writer.php",
+  "scripts": {
+    "build": "./build.sh",
+    "test": "wp-env run tests-cli sh -- -c \"cd wp-content/plugins/flow-writer && vendor/bin/phpunit\"",
+    "test:local": "vendor/bin/phpunit",
+    "lint:php": "vendor/bin/phpcs",
+    "format:php": "vendor/bin/phpcbf",
+    "env:start": "wp-env start",
+    "env:stop": "wp-env stop",
+    "env:reset": "wp-env reset all",
+    "env:destroy": "wp-env destroy",
+    "composer:install": "composer install",
+    "prepare": "husky"
+  },
+  "author": "Tom",
+  "license": "GPL-2.0-or-later",
+  "devDependencies": {
+    "@wordpress/env": "^11.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0"
+  },
+  "lint-staged": {
+    "*.php": [
+      "bash -c 'vendor/bin/phpcbf \"$@\" || [ $? -eq 1 ]' --",
+      "vendor/bin/phpcs"
+    ]
+  }
+}

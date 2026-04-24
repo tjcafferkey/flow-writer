@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Coding Standards for Flow Writer">
+	<description>PHPCS configuration for the Flow Writer plugin.</description>
+
+	<!-- Exclude paths -->
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/tests/*</exclude-pattern>
+
+	<!-- Configs -->
+	<config name="testVersion" value="7.4-"/>
+	<config name="minimum_supported_wp_version" value="6.0"/>
+
+	<!-- Rules -->
+	<rule ref="WordPress-Core"/>
+	<rule ref="WordPress-Docs"/>
+	<rule ref="WordPress-Extra"/>
+
+	<!-- Verify that no code sniffs are used that are incompatible with the targeted PHP version. -->
+	<rule ref="PHPCompatibilityWP"/>
+
+	<!-- Check all files in this directory and the directories below it. -->
+	<file>.</file>
+
+	<!-- Text domain -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="flow-writer"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Pass some flags to PHPCS:
+		 p flag: Show progress of the run.
+		 s flag: Show sniff codes in all reports.
+		 v flag: Print verbose output.
+		 n flag: Do not print warnings.
+	-->
+	<arg value="psv"/>
+	<arg name="colors"/>
+	<arg name="extensions" value="php"/>
+</ruleset>

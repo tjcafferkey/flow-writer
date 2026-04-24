@@ -1,0 +1,24 @@
+# Build artifacts
+dist/
+*.zip
+
+# Dependencies
+vendor/
+node_modules/
+
+# Testing
+.phpunit.result.cache
+coverage/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
