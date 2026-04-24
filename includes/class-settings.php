@@ -20,7 +20,6 @@ class Settings {
 	 * Initializes the Settings class by hooking into WordPress admin actions.
 	 */
 	public static function init() {
-		Settings_Utils::migrate_settings();
 		add_action( 'admin_menu', array( __CLASS__, 'add_settings_page' ) );
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
 		// Hook into options update to handle cron.

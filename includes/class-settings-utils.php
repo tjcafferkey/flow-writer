@@ -102,40 +102,4 @@ class Settings_Utils {
 		unset( $settings[ $key ] );
 		return update_option( self::OPTION_NAME, $settings );
 	}
-
-	/**
-	 * Migrates individual settings to the consolidated option.
-	 */
-	public static function migrate_settings() {
-		if ( get_option( self::OPTION_NAME ) ) {
-			return; // Already migrated.
-		}
-
-		$keys = array(
-			'connector_id',
-			'frequency',
-			'times',
-			'status',
-			'author',
-			'post_length',
-			'global_context',
-			'last_run',
-		);
-
-		$new_settings = array();
-		foreach ( $keys as $key ) {
-			$old_value = get_option( 'flow_writer_' . $key );
-			if ( false !== $old_value ) {
-				$new_settings[ $key ] = $old_value;
-			}
-		}
-
-		if ( ! empty( $new_settings ) ) {
-			update_option( self::OPTION_NAME, $new_settings );
-			// Optionally delete old options.
-			foreach ( $keys as $key ) {
-				delete_option( 'flow_writer_' . $key );
-			}
-		}
-	}
 }

@@ -88,20 +88,4 @@ class SettingsUtilsTest extends WP_UnitTestCase {
 		// Deleting non-existent should return true.
 		$this->assertTrue( Settings_Utils::delete_setting( 'non_existent' ) );
 	}
-	/**
-	 * Test settings migration.
-	 */
-	public function test_migrate_settings() {
-		update_option( 'flow_writer_connector_id', 'migrated-id' );
-		update_option( 'flow_writer_frequency', 'daily' );
-
-		Settings_Utils::migrate_settings();
-
-		$this->assertEquals( 'migrated-id', Settings_Utils::get_setting( 'connector_id' ) );
-		$this->assertEquals( 'daily', Settings_Utils::get_setting( 'frequency' ) );
-
-		// Check that old options are deleted.
-		$this->assertFalse( get_option( 'flow_writer_connector_id' ) );
-		$this->assertFalse( get_option( 'flow_writer_frequency' ) );
-	}
 }
