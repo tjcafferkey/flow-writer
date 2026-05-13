@@ -125,8 +125,9 @@ class Content_Manager extends AI_Content_Base {
 		$taxonomies = get_taxonomies( array( 'public' => true ) );
 		$terms      = get_terms(
 			array(
-				'taxonomy'   => array_values( $taxonomies ),
-				'hide_empty' => false,
+				'taxonomy'     => array_values( $taxonomies ),
+				'hide_empty'   => false,
+				'slug__not_in' => array( 'uncategorized' ),
 			)
 		);
 
