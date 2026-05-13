@@ -22,13 +22,31 @@ abstract class AI_Content_Base {
 	 * @return int|\WP_Error|false The post ID on success, WP_Error on failure, or false if generation failed.
 	 */
 	public function generate() {
-		$target_term = $this->select_term();
-		if ( ! $target_term ) {
+		$target_term    = null;
+		$prompt_context = null;
+		$attempts       = 0;
+		$max_attempts   = 10;
+
+		// Continue picking terms until we find one with a valid prompt context.
+		while ( $attempts < $max_attempts ) {
+			$target_term = $this->select_term();
+			if ( ! $target_term ) {
+				return false;
+			}
+
+			$prompt_context = $this->get_prompt_context( $target_term );
+			if ( ! empty( $prompt_context ) ) {
+				break;
+			}
+
+			++$attempts;
+		}
+
+		if ( empty( $prompt_context ) ) {
 			return false;
 		}
 
-		$prompt_context = $this->get_prompt_context( $target_term );
-		$result         = Engine::generate_content( $prompt_context );
+		$result = Engine::generate_content( $prompt_context );
 
 		if ( ! empty( $result ) ) {
 			$title   = null;
