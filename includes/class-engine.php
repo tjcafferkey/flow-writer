@@ -61,6 +61,15 @@ class Engine {
 			$result = $client->generate_text();
 
 			if ( is_wp_error( $result ) ) {
+				if ( 429 === (int) $result->get_error_code() ) {
+					$admin_email = get_option( 'admin_email' );
+					$subject     = sprintf( '[%s] AI Generation Failed: Insufficient Funds', get_bloginfo( 'name' ) );
+					$message     = "The AI generation failed because of insufficient funds.\n\n" .
+								'Provider: ' . ( $connector_id ? $connector_id : 'Unknown' ) . "\n" .
+								'Error: ' . $result->get_error_message();
+
+					wp_mail( $admin_email, $subject, $message );
+				}
 				return $result;
 			}
 
